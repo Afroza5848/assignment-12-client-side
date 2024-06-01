@@ -28,7 +28,8 @@ const Navbar = () => {
         } to="/notification"><a><img className='w-7' src={notification} alt="" /></a></NavLink>
     </>
     return (
-        <div className='bg-base-300 py-4'>
+        
+        <div className='bg-base-200 py-4'>
             <div className="navbar max-w-7xl mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -40,7 +41,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className='flex items-center gap-3'>
-                        <img className='w-16' src={logo} alt="" />
+                        <img className='w-14' src={logo} alt="" />
                         <a className=" text-5xl font-bold poppins">Parcel<span className='text-[#4acf3d] font-extrabold text-6xl eb-serif'>Pro</span></a>
                     </div>
                 </div>
