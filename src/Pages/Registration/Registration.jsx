@@ -10,7 +10,7 @@ import { ImSpinner9 } from "react-icons/im";
 
 
 const Registration = () => {
-    const { createUser, updateUserProfile,loading,setLoading } = useAuth();
+    const { createUser, updateUserProfile,loading,setLoading,googleSignIn } = useAuth();
     const navigate = useNavigate()
     const {
         register,
@@ -45,6 +45,19 @@ const Registration = () => {
         }
     }
 
+     // handle google signin
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn()
+
+      navigate('/')
+      toast.success('Signup Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err.message)
+    }
+  }
+
 
     return (
         <div className='flex justify-center w-full items-center min-h-[calc(100vh-306px)]'>
@@ -61,7 +74,7 @@ const Registration = () => {
                         Get Your Free Account Now.
                     </p>
 
-                    <div className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
+                    <div onClick={handleGoogleSignIn}  disabled={loading} className='flex disabled:cursor-not-allowed cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
                         <div className='px-4 py-2'>
                             <svg className='w-6 h-6' viewBox='0 0 40 40'>
                                 <path
@@ -179,7 +192,7 @@ const Registration = () => {
 
                         <Link
                             to='/login'
-                            className='text-xs text-gray-500 uppercase  hover:underline'
+                            className='text-xs text-gray-500 uppercase hover:text-green-500  hover:underline'
                         >
                             or sign in
                         </Link>

@@ -2,8 +2,13 @@
 module.exports = {
   darkMode: ['class'],
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',  // Adjust paths based on your project structure
-    './node_modules/@shadcn/ui/**/*.js'  // Include ShadCN UI components if needed
+    // './src/**/*.{js,jsx,ts,tsx}',  // Adjust paths based on your project structure
+    // './node_modules/@shadcn/ui/**/*.js'  // Include ShadCN UI components if needed
+    './pages/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+    './app/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@shadcn/ui/**/*.js',
   ],
   // prefix: '-',  // Use a prefix to avoid conflicts
   theme: {
@@ -31,7 +36,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+  ],
   daisyui: {
     themes: ['light', 'dark'],  // Add more themes as needed
   },

@@ -2,18 +2,18 @@ import 'daisyui/dist/full.css';
 import logo from '../../assets/image/logo.png'
 import { Link, NavLink } from 'react-router-dom';
 import notification from '../../assets/image/bell.png'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "../../components/ui/dropdown-menu"
-
+import useAuth from '@/Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 
 const Navbar = () => {
+    const { user,logOut } = useAuth();
+    const handleLogout = () => {
+        logOut()
+        .then(() => {
+            toast.success('Logout Success')
+        })
+    }
     const navLink = <>
         <NavLink className={({ isActive, isPending }) =>
             isActive
@@ -62,21 +62,37 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end space-x-3">
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                            <DropdownMenuItem>Team</DropdownMenuItem>
-                            <DropdownMenuItem>Subscription</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {
+                        user ? <>
+                            <details className="dropdown z-[200]">
+                                <summary className="m-3 btn login  rounded-full">
+                                    <div className="avatar">
+                                        <div className="w-12 border-2 border-white m-3 rounded-full">
+                                            <img src={user?.photoURL} />
+                                        </div>
+                                    </div>
+                                </summary>
+                                <ul className="p-4 shadow-lg menu dropdown-content z-[1] bg-base-100 rounded-lg space-y-4 w-52">
+                                    <li><a className='capitalize font-bold text-2xl text-green-500'>{user?.displayName}</a></li>
+                                    <NavLink className={({ isActive, isPending }) =>
+                                        isActive
+                                            ? "text-green-500 font-medium text-2xl eb-serif border-b-2  border-green-500"
+                                            : isPending
+                                                ? "text-gray-800 font-medium text-2xl eb-serif"
+                                                : "text-gray-800 font-medium text-2xl eb-serif"
+                                    } to="/dashboard"><a>Dashboard</a></NavLink>
+                                    <li><button onClick={handleLogout} className="px-3 py-2 text-center rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Logout</button></li>
+                                </ul>
+                            </details>
+                        </> :
+                            <>
+                                <Link to="/login"><button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Login</button></Link>
+                            </>
+                    }
 
 
-                    <Link to="/login"><button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Login</button></Link>
-                    <button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Logout</button>
+
+
                 </div>
             </div>
         </div>
