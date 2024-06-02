@@ -1,6 +1,6 @@
 import 'daisyui/dist/full.css';
 import logo from '../../assets/image/logo.png'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import notification from '../../assets/image/bell.png'
 
 const Navbar = () => {
@@ -51,7 +51,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end space-x-3">
-                    <button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Login</button>
+                    <Link to="/login"><button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Login</button></Link>
                     <button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Logout</button>
                 </div>
             </div>

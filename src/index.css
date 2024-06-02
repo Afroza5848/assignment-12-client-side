@@ -15,6 +15,9 @@
 .eb-serif{
   font-family: "EB Garamond", serif;
 }
+.login{
+  background-color: rgb(8, 230, 8) !important;
+}
 
 
 @media (min-width: 1024px) {
