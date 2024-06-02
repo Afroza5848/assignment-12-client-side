@@ -37,7 +37,7 @@ const Registration = () => {
              // update profile
             await updateUserProfile(data.name, image.data.data.display_url)
              toast.success('Registration Successfully')
-             navigate('/')
+             navigate('/login')
             
         } catch (error) {
             console.log(error);
