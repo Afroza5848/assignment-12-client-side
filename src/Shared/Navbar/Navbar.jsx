@@ -2,6 +2,16 @@ import 'daisyui/dist/full.css';
 import logo from '../../assets/image/logo.png'
 import { Link, NavLink } from 'react-router-dom';
 import notification from '../../assets/image/bell.png'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "../../components/ui/dropdown-menu"
+
+
 
 const Navbar = () => {
     const navLink = <>
@@ -28,7 +38,7 @@ const Navbar = () => {
         } to="/notification"><a><img className='w-7' src={notification} alt="" /></a></NavLink>
     </>
     return (
-        
+
         <div className='bg-base-200 py-4'>
             <div className="navbar max-w-7xl mx-auto">
                 <div className="navbar-start">
@@ -51,6 +61,20 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end space-x-3">
+
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+
                     <Link to="/login"><button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Login</button></Link>
                     <button className="px-5 py-3 rounded-md bg-[#4acf3d] text-white text-xl eb-serif font-semibold">Logout</button>
                 </div>
