@@ -10,6 +10,7 @@ import useAxiosPublic from "@/Hooks/useAxiosPublic"
 
 
 
+
 const Registration = () => {
     const { createUser, updateUserProfile, loading, setLoading, googleSignIn } = useAuth();
     const navigate = useNavigate()
@@ -20,7 +21,7 @@ const Registration = () => {
     } = useForm()
     const axiosPublic = useAxiosPublic();
     const onSubmit = async (data) => {
-        console.log(data.email, data.password, data.name,data.role);
+        console.log(data.email, data.password, data.name, data.role);
         const formData = new FormData();
         formData.append('image', data.photo[0])
         // createUser(data.email, data.password)
@@ -56,13 +57,23 @@ const Registration = () => {
         }
     }
 
-    // handle google signin
+    // handle google sign in
     const handleGoogleSignIn = async () => {
         try {
-            await googleSignIn()
-
-            navigate('/')
-            toast.success('Signup Successful')
+            const res = await googleSignIn()
+            console.log(res.user.displayName);
+            const userInfo = {
+                name: res.user.displayName,
+                email: res.user.email,
+                image: res.user.photoURL,
+                role: 'user'
+            }
+            const result = await axiosPublic.post('/users', userInfo)
+            console.log(result);
+            if (result.data.insertedId){
+                toast.success('Registration Successfully')
+                navigate('/')
+            }   
         } catch (err) {
             console.log(err)
             toast.error(err.message)
@@ -111,6 +122,7 @@ const Registration = () => {
                             Sign in with Google
                         </span>
                     </div>
+
 
                     <div className='flex items-center justify-between mt-4'>
                         <span className='w-1/5 border-b  lg:w-1/4'></span>

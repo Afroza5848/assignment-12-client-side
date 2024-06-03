@@ -4,11 +4,12 @@ import Sidebar from "./components/Sidebar/Sidebar";
 
 
 const DashBoard = () => {
+    
     return (
         <div>
             <Drawer></Drawer>
             <div className="">
-                <Sidebar className="side-bar"></Sidebar>
+                <Sidebar></Sidebar>
             </div>
         </div>
     );

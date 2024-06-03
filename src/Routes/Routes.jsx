@@ -8,6 +8,7 @@ import Registration from "@/Pages/Registration/Registration";
 
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import Statistics from "@/Pages/Dashboard/Page/Statistics";
 
   const router = createBrowserRouter([
     {
@@ -33,7 +34,12 @@ import PrivateRoute from "./PrivateRoute";
     {
       path: "/dashboard",
       element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
-      
+      children: [
+        {
+          path: "statistics",
+          element: <Statistics></Statistics>
+        }
+      ]
     }
   ]);
 

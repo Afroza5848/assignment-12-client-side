@@ -32,7 +32,8 @@ const Login = () => {
       // handle google signin
       const handleGoogleSignIn = async () => {
         try {
-          await googleSignIn()
+        const res =  await googleSignIn()
+        console.log(res);
           navigate('/')
           toast.success('SignIn Successful')
         } catch (err) {
