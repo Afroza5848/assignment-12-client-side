@@ -52,7 +52,7 @@ const Navbar = () => {
                     </div>
                     <div className='flex items-center gap-3'>
                         <img className='w-14' src={logo} alt="" />
-                        <a className=" text-5xl font-bold poppins">Parcel<span className='text-[#4acf3d] font-extrabold text-6xl eb-serif'>Pro</span></a>
+                        <a className=" text-5xl font-bold monts">Parcel<span className='text-[#4acf3d] font-extrabold text-6xl eb-serif'>Pro</span></a>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
