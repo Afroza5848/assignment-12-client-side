@@ -7,7 +7,9 @@ const DashBoard = () => {
     return (
         <div>
             <Drawer></Drawer>
-            <Sidebar></Sidebar>
+            <div className="">
+                <Sidebar className="side-bar"></Sidebar>
+            </div>
         </div>
     );
 };

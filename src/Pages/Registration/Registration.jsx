@@ -20,7 +20,7 @@ const Registration = () => {
     } = useForm()
     const axiosPublic = useAxiosPublic();
     const onSubmit = async (data) => {
-        console.log(data.email, data.password, data.name);
+        console.log(data.email, data.password, data.name,data.role);
         const formData = new FormData();
         formData.append('image', data.photo[0])
         // createUser(data.email, data.password)
@@ -40,7 +40,8 @@ const Registration = () => {
             const userInfo = {
                 name: data.name,
                 email: data.email,
-                image: image.data.data.display_url
+                image: image.data.data.display_url,
+                role: data.role
             }
             const res = await axiosPublic.post('/users', userInfo)
             if (res.data.insertedId) {
@@ -148,6 +149,20 @@ const Registration = () => {
                                 {...register("photo", { required: true })}
                             />
                             {errors.photo && <span className="text-red-500">This field is required</span>}
+                        </div>
+                        <div className='mt-4'>
+                            <label
+                                className='block mb-2 text-sm font-medium text-gray-600 '
+                                htmlFor='photo'
+                            >
+                                Select Type
+                            </label>
+                            <select name="role" className="select select-bordered w-full" {...register("role", { required: true })}>
+                                <option disabled selected>Select Your Type</option>
+                                <option value="User">User</option>
+                                <option value="Delivery Man">Delivery Man</option>
+                            </select>
+                            {errors.role && <span className="text-red-500">This field is required</span>}
                         </div>
                         <div className='mt-4'>
                             <label

@@ -25,6 +25,12 @@
     display: none !important;
   }
 }
+@media (min-width: 674px) {
+  .side-bar{
+    display: none !important;
+
+  }
+}
 @media (min-width: 1400px) {
   .banner-text{
     margin-left: 10% !important;
