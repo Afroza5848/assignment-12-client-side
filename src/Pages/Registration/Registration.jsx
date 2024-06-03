@@ -22,16 +22,17 @@ const Registration = () => {
     const axiosPublic = useAxiosPublic();
     const onSubmit = async (data) => {
         console.log(data.email, data.password, data.name, data.role);
+        console.log(data.photo[0]);
         const formData = new FormData();
         formData.append('image', data.photo[0])
         // createUser(data.email, data.password)
         try {
             setLoading(true)
             // image upload get url
-            const image = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+            const image = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_UPDATE_IMG_API_KEY}`,
                 formData
             )
-
+            console.log(image);
             //2. User Registration
             const result = await createUser(data.email, data.password)
             console.log(result);
