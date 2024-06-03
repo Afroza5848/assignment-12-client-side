@@ -6,57 +6,67 @@ import axios from "axios"
 import useAuth from "@/Hooks/useAuth"
 import toast from "react-hot-toast"
 import { ImSpinner9 } from "react-icons/im";
+import useAxiosPublic from "@/Hooks/useAxiosPublic"
 
 
 
 const Registration = () => {
-    const { createUser, updateUserProfile,loading,setLoading,googleSignIn } = useAuth();
+    const { createUser, updateUserProfile, loading, setLoading, googleSignIn } = useAuth();
     const navigate = useNavigate()
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
-
-    const onSubmit = async(data) => {
+    const axiosPublic = useAxiosPublic();
+    const onSubmit = async (data) => {
         console.log(data.email, data.password, data.name);
         const formData = new FormData();
         formData.append('image', data.photo[0])
         // createUser(data.email, data.password)
         try {
-          setLoading(true)
+            setLoading(true)
             // image upload get url
-            const image  = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+            const image = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
                 formData
             )
-            
+
             //2. User Registration
             const result = await createUser(data.email, data.password)
             console.log(result);
 
-             // update profile
+            // update profile
             await updateUserProfile(data.name, image.data.data.display_url)
-             toast.success('Registration Successfully')
-             navigate('/login')
-            
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                image: image.data.data.display_url
+            }
+            const res = await axiosPublic.post('/users', userInfo)
+            if (res.data.insertedId) {
+                toast.success('Registration Successfully')
+                navigate('/login')
+            }
+
+
         } catch (error) {
             console.log(error);
-            toast.error(error.message) 
+            toast.error(error.message)
         }
     }
 
-     // handle google signin
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn()
+    // handle google signin
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn()
 
-      navigate('/')
-      toast.success('Signup Successful')
-    } catch (err) {
-      console.log(err)
-      toast.error(err.message)
+            navigate('/')
+            toast.success('Signup Successful')
+        } catch (err) {
+            console.log(err)
+            toast.error(err.message)
+        }
     }
-  }
 
 
     return (
@@ -74,7 +84,7 @@ const Registration = () => {
                         Get Your Free Account Now.
                     </p>
 
-                    <div onClick={handleGoogleSignIn}  disabled={loading} className='flex disabled:cursor-not-allowed cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
+                    <div onClick={handleGoogleSignIn} disabled={loading} className='flex disabled:cursor-not-allowed cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
                         <div className='px-4 py-2'>
                             <svg className='w-6 h-6' viewBox='0 0 40 40'>
                                 <path
