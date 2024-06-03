@@ -5,21 +5,18 @@ import { BsFillBox2HeartFill } from "react-icons/bs";
 import { IoHome } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
-import useRole from "@/Hooks/useRole";
 import MenuItem from "./Menu/MenuItem";
 
 
 const Sidebar = () => {
-    const [role] = useRole();
-    console.log(role);
+   
+    
     return (
         <div className="flex flex-col min-h-screen p-3 w-60 bg-base-200 dark:text-gray-800">
             <div className="space-y-3">
                 <div className="flex items-center justify-between">
                     <h2 className="flex items-center gap-2 text-2xl bg-green-300 px-8 py-1 rounded"><MdDashboard />Dashboard</h2>
-                    <button className="p-2">
-
-                    </button>
+                    
                 </div>
 
                 <div className="flex-1">
@@ -28,7 +25,7 @@ const Sidebar = () => {
                         <MenuItem label="Statistics" address="/dashboard" icon={ImStatsDots}></MenuItem>
                         <MenuItem label="Book A Parcel" address="/bookingParcel" icon={GiConfirmed}></MenuItem>
                         <MenuItem label="My Parcel" address="/myParcel" icon={BsFillBox2HeartFill}></MenuItem>
-                        <MenuItem label="My Profile Menu" address="/myProfile" icon={IoSettings}></MenuItem>
+                        <MenuItem label="My Profile Menu" address="/dashboard/myProfile" icon={IoSettings}></MenuItem>
 
                     </ul>
                 </div>

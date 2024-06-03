@@ -9,6 +9,7 @@ import Registration from "@/Pages/Registration/Registration";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Statistics from "@/Pages/Dashboard/Page/Statistics";
+import Profile from "@/Pages/Dashboard/Page/Profile/Profile";
 
   const router = createBrowserRouter([
     {
@@ -32,12 +33,16 @@ import Statistics from "@/Pages/Dashboard/Page/Statistics";
     },
 
     {
-      path: "/dashboard",
+      path: "dashboard",
       element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
       children: [
         {
-          path: "statistics",
+           index: true,
           element: <Statistics></Statistics>
+        },
+        {
+          path: "myProfile",
+          element: <Profile></Profile>
         }
       ]
     }
