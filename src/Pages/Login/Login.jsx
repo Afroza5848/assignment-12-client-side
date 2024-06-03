@@ -5,18 +5,20 @@ import toast from "react-hot-toast"
 import useAuth from "@/Hooks/useAuth"
 import { useForm } from "react-hook-form"
 import { ImSpinner9 } from "react-icons/im"
+import useAxiosPublic from "@/Hooks/useAxiosPublic"
 
 const Login = () => {
-  const { loginUser,loading,setLoading,googleSignIn } = useAuth();
-    const navigate = useNavigate()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm()
+  const { loginUser, loading, setLoading, googleSignIn } = useAuth();
+  const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
   const onSubmit = async (data) => {
-    
+
     try {
       setLoading(true)
       // 1. sign in user
@@ -29,18 +31,30 @@ const Login = () => {
       setLoading(false)
     }
   }
-      // handle google signin
-      const handleGoogleSignIn = async () => {
-        try {
-        const res =  await googleSignIn()
-        console.log(res);
-          navigate('/')
-          toast.success('SignIn Successful')
-        } catch (err) {
-          console.log(err)
-          toast.error(err.message)
-        }
+  // handle google signin
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await googleSignIn()
+      const userInfo = {
+        name: res.user.displayName,
+        email: res.user.email,
+        image: res.user.photoURL,
+        role: 'user'
       }
+      const result = await axiosPublic.post('/users', userInfo)
+      console.log(result);
+      if (result.data.insertedId) {
+       
+        navigate('/')
+      }
+      toast.success('SignIn Successful')
+      navigate('/dashboard')
+
+    } catch (err) {
+      console.log(err)
+      toast.error(err.message)
+    }
+  }
   return (
     <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
       <div className='flex w-full lg:flex-row flex-col max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
