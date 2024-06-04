@@ -1,7 +1,6 @@
 import useAuth from "@/Hooks/useAuth";
 import useRole from "@/Hooks/useRole";
 import axios from "axios";
-import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 
 

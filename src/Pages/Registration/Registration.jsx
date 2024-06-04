@@ -170,8 +170,8 @@ const Registration = () => {
                             </label>
                             <select name="role" className="select select-bordered w-full" {...register("role", { required: true })}>
                                 <option disabled selected>Select Your Type</option>
-                                <option value="User">User</option>
-                                <option value="Delivery Man">Delivery Man</option>
+                                <option value="user">User</option>
+                                <option value="deliverymen">Delivery Men</option>
                             </select>
                             {errors.role && <span className="text-red-500">This field is required</span>}
                         </div>
