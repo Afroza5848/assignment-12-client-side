@@ -11,6 +11,8 @@ import PrivateRoute from "./PrivateRoute";
 import Statistics from "@/Pages/Dashboard/Page/Statistics";
 import Profile from "@/Pages/Dashboard/Page/Profile/Profile";
 import BookingParcel from "@/Pages/Dashboard/Page/User/BookingParcel/BookingParcel";
+import MyParcels from "@/Pages/Dashboard/Page/User/MyParcels/MyParcels";
+import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooking";
 
   const router = createBrowserRouter([
     {
@@ -49,6 +51,15 @@ import BookingParcel from "@/Pages/Dashboard/Page/User/BookingParcel/BookingParc
         {
           path: "bookingParcel",
           element: <BookingParcel></BookingParcel>
+        },
+        {
+          path: "myParcel",
+          element: <MyParcels></MyParcels>
+        },
+        {
+          path: "updateBooking/:id",
+          element: <UpdateBooking></UpdateBooking>,
+          loader: ({ params }) => fetch(`http://localhost:5000/parcel/${params.id}`)
         }
       ]
     }
