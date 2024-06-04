@@ -10,6 +10,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Statistics from "@/Pages/Dashboard/Page/Statistics";
 import Profile from "@/Pages/Dashboard/Page/Profile/Profile";
+import BookingParcel from "@/Pages/Dashboard/Page/User/BookingParcel/BookingParcel";
 
   const router = createBrowserRouter([
     {
@@ -40,9 +41,14 @@ import Profile from "@/Pages/Dashboard/Page/Profile/Profile";
            index: true,
           element: <Statistics></Statistics>
         },
+        // user related 
         {
           path: "myProfile",
           element: <Profile></Profile>
+        },
+        {
+          path: "bookingParcel",
+          element: <BookingParcel></BookingParcel>
         }
       ]
     }
