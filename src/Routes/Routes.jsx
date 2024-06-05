@@ -13,6 +13,7 @@ import Profile from "@/Pages/Dashboard/Page/Profile/Profile";
 import BookingParcel from "@/Pages/Dashboard/Page/User/BookingParcel/BookingParcel";
 import MyParcels from "@/Pages/Dashboard/Page/User/MyParcels/MyParcels";
 import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooking";
+import AllParcels from "@/Pages/Dashboard/Page/Admin/AllParcels/AllParcels";
 
   const router = createBrowserRouter([
     {
@@ -39,9 +40,14 @@ import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooki
       path: "dashboard",
       element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
       children: [
+        // admin related
         {
            index: true,
           element: <Statistics></Statistics>
+        },
+        {
+          path: "allParcels",
+          element: <AllParcels></AllParcels>
         },
         // user related 
         {

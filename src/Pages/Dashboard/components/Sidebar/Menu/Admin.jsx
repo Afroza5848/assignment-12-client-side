@@ -8,9 +8,9 @@ const Admin = () => {
     return (
         <>
             <MenuItem label="Statistics" address="/dashboard" icon={ImStatsDots}></MenuItem>
-            <MenuItem label="All Parcels" address="/allParcels" icon={BsInboxesFill}></MenuItem>
-            <MenuItem label="All Users" address="/allUsers" icon={FaUsers}></MenuItem>
-            <MenuItem label="All Deliverymen" address="/allDeliverymen" icon={FaMotorcycle}></MenuItem>
+            <MenuItem label="All Parcels" address="/dashboard/allParcels" icon={BsInboxesFill}></MenuItem>
+            <MenuItem label="All Users" address="/dashboard/allUsers" icon={FaUsers}></MenuItem>
+            <MenuItem label="All Deliverymen" address="/dashboard/allDeliverymen" icon={FaMotorcycle}></MenuItem>
         </>
     );
 };
