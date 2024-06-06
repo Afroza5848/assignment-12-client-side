@@ -14,6 +14,7 @@ import BookingParcel from "@/Pages/Dashboard/Page/User/BookingParcel/BookingParc
 import MyParcels from "@/Pages/Dashboard/Page/User/MyParcels/MyParcels";
 import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooking";
 import AllParcels from "@/Pages/Dashboard/Page/Admin/AllParcels/AllParcels";
+import AllUsers from "@/Pages/Dashboard/Page/Admin/AllUsers/AllUsers";
 
   const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ import AllParcels from "@/Pages/Dashboard/Page/Admin/AllParcels/AllParcels";
         {
           path: "allParcels",
           element: <AllParcels></AllParcels>
+        },
+        {
+          path: "allUsers",
+          element: <AllUsers></AllUsers>
         },
         // user related 
         {

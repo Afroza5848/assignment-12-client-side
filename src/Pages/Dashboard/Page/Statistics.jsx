@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 
 const Statistics = () => {
     const [state, setState] = useState({
-
+        
         options: {
             chart: {
                 id: "basic-bar"

@@ -2,28 +2,44 @@ import useAllDeliverymen from "@/Hooks/useAllDeliverymen";
 import useAllParcels from "@/Hooks/useAllParcels";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure()
-    const [parcels] = useAllParcels();
+    const [parcels, ,refetch] = useAllParcels();
     //console.log(parcels);
     const [deliveryMens] = useAllDeliverymen();
-    //console.log('deliverymen',deliveryMens);
     const [selectedDeliveryMenId, setSelectedDeliveryMenId] = useState('');
     const [approximateDeliveryDate, setApproximateDeliveryDate] = useState('');
-    console.log(selectedDeliveryMenId,approximateDeliveryDate);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
     // handle assign button
-    const handleAssign = async(item) => {
+    const handleAssign = async (item) => {
         const assignParcel = {
             deliverymenId: selectedDeliveryMenId,
             approximateDeliveryDate: approximateDeliveryDate,
-            status:item.status
+            status: item.status
         }
-        const result = axiosSecure.patch(`/assignParcels/${item._id}`, assignParcel )
-        console.log('assign', result.data);
+        const result = axiosSecure.patch(`/assignParcels/${item._id}`, assignParcel)
+        if(result.data.modifiedCount > 0){
+            refetch();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Parcels Assign Complete!",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
 
+    }
+    // handle search by date------------
+    const handleSearch = async() => {
+        const result = axiosSecure.get(`/allParcels?startDate=${startDate}&endDate=${endDate}`)
+        console.log(result.data);
     }
 
     return (
@@ -33,10 +49,30 @@ const AllParcels = () => {
                 <p className="text-gray-600 mt-4">Here you can view and manage All Booked parcels</p>
                 <p className='border-b-2 border-[#4acf3d] w-60 mt-3 mb-8 mx-auto'>----------------</p>
             </div>
+            <div className="mb-6 flex justify-center">
+                <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="mr-2 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
+                />
+                <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="mr-2 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
+                />
+                <button
+                    onClick={handleSearch}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Search
+                </button>
+            </div>
             <div className="overflow-x-auto">
                 <table className="lg:min-w-full bg-white rounded-lg shadow-md">
                     <thead className="login text-white">
-                        <tr className="">
+                        <tr className="login">
                             <th className="py-5 px-4 ">User Name</th>
                             <th className="py-5 px-4 ">User Phone</th>
                             <th className="py-5 px-4 ">Requested Delivery Date</th>
@@ -87,11 +123,11 @@ const AllParcels = () => {
                                                     <label htmlFor="deliveryDate" className="block text-gray-700 font-bold mb-2">Approximate Delivery Date</label>
 
                                                     <input type="date" id="deliveryDate" name="approximateDeliveryDate" className="w-full border-gray-200 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-green-500"
-                                                     onChange={(e) => setApproximateDeliveryDate(e.target.value)}
+                                                        onChange={(e) => setApproximateDeliveryDate(e.target.value)}
                                                     />
                                                 </div>
                                                 <div className="mb-4">
-                                                    <input onClick={() =>handleAssign(parcel)} type="submit" className="btn login text-white" value="Assign" />
+                                                    <input onClick={() => handleAssign(parcel)} type="submit" className="btn login text-white" value="Assign" />
                                                 </div>
                                             </form>
                                         </div>

@@ -43,7 +43,8 @@ const Registration = () => {
                 name: data.name,
                 email: data.email,
                 image: image.data.data.display_url,
-                role: data.role
+                role: data.role,
+                phone: data.phone
             }
             const res = await axiosPublic.post('/users', userInfo)
             if (res.data.insertedId) {
@@ -174,6 +175,22 @@ const Registration = () => {
                                 <option value="deliverymen">Delivery Men</option>
                             </select>
                             {errors.role && <span className="text-red-500">This field is required</span>}
+                        </div>
+                        <div className='mt-4'>
+                            <label
+                                className='block mb-2 text-sm font-medium text-gray-600 '
+                                htmlFor='LoggingEmailAddress'
+                            >
+                                Phone Number
+                            </label>
+                            <input
+                                id='LoggingEmailAddress'
+                                autoComplete='phone'
+                                name='phone'
+                                className='block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300'
+                                type='number' {...register("phone", { required: true })}
+                            />
+                            {errors.phone && <span className="text-red-500">This field is required</span>}
                         </div>
                         <div className='mt-4'>
                             <label

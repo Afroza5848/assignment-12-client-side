@@ -61,7 +61,7 @@ const MyParcels = () => {
                                 <td className="border-t text-center py-4 px-4">{parcel.status}</td>
                                 <td className="border-t text-center flex lg:flex-row flex-col gap-4 items-center py-4  px-4">
 
-                                    <Link to={`/dashboard/updateBooking/${parcel._id}`}><button disabled={parcel.status !== 'pending'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" >Update</button></Link>
+                                    <Link to={`/dashboard/updateBooking/${parcel._id}`}><button disabled={parcel.status !== 'pending'}  className="bg-blue-500 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-1 px-2 rounded" >Update</button></Link>
                                     <button  onClick={() => handleUpdateStatus(parcel)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" >Cancel</button>
                                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Review</button>
                                     <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Pay</button>

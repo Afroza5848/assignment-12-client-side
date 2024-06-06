@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 const BookingParcel = () => {
     const { user } = useAuth();
     const [price, setPrice] = useState(Number)
-    const [weight , setWeight] = useState(Number)
+    const [weight, setWeight] = useState(Number)
     const axiosPublic = useAxiosPublic();
     // calculate price by parcel weight
     const handlePrice = (e) => {
@@ -42,7 +42,7 @@ const BookingParcel = () => {
     } = useForm()
     const onSubmit = async (data) => {
         console.log(data);
-        const {phone, parcelType, receiverName, receiverPhone, deliveryAddress, deliveryDate, deliveryLatitude, deliveryLongitude} = data;
+        const { phone, parcelType, receiverName, receiverPhone, deliveryAddress, deliveryDate, deliveryLatitude, deliveryLongitude } = data;
         const bookingParcel = {
             name: user?.displayName,
             email: user?.email,
@@ -60,21 +60,27 @@ const BookingParcel = () => {
             status: 'pending'
         }
 
-        try{
+        try {
             const result = await axiosPublic.post('/parcels', bookingParcel)
             console.log(result.data);
-            if(result.data.insertedId){
+            if (result.data.insertedId) {
+                // update number of book parcel and update total spent
+                const res = await axiosPublic.patch('/updateUser', bookingParcel)
+                console.log('update book',res.data);
+
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
                     title: `${user?.displayName}, Your Parcel Booked`,
                     showConfirmButton: false,
                     timer: 1500
-                  });
-                  reset();
+                });
+                reset();
             }
 
-        }catch(err){
+
+
+        } catch (err) {
             console.log(err);
         }
 
@@ -93,7 +99,7 @@ const BookingParcel = () => {
                     <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
-                            <input type="text" id="name" name="name" className="w-full border-gray-200 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-green-500" readOnly value={user?.displayName}  />
+                            <input type="text" id="name" name="name" className="w-full border-gray-200 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-green-500" readOnly value={user?.displayName} />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
@@ -115,8 +121,8 @@ const BookingParcel = () => {
                     <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
                         <div className="mb-4">
                             <label htmlFor="parcelWeight" className="block text-gray-700 font-bold mb-2">Parcel Weight (kg)</label>
-                            <input onChange={handlePrice} type="number" id="parcelWeight" name="parcelWeight" className="w-full border-gray-200 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-green-500" placeholder="Enter parcel weight"  />
-                            
+                            <input onChange={handlePrice} type="number" id="parcelWeight" name="parcelWeight" className="w-full border-gray-200 px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-green-500" placeholder="Enter parcel weight" />
+
                         </div>
                         <div className="mb-4">
                             <label htmlFor="receiverName" className="block text-gray-700 font-bold mb-2">Receiver’s Name</label>
