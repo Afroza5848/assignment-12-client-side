@@ -2,13 +2,14 @@ import useAllDeliverymen from "@/Hooks/useAllDeliverymen";
 import useAllParcels from "@/Hooks/useAllParcels";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure()
-    const [parcels, ,refetch] = useAllParcels();
+    const [parcels,isLoading ,refetch] = useAllParcels();
     //console.log(parcels);
     const [deliveryMens] = useAllDeliverymen();
     const [selectedDeliveryMenId, setSelectedDeliveryMenId] = useState('');
@@ -21,24 +22,30 @@ const AllParcels = () => {
         const assignParcel = {
             deliverymenId: selectedDeliveryMenId,
             approximateDeliveryDate: approximateDeliveryDate,
-            status: item.status
         }
-        const result = axiosSecure.patch(`/assignParcels/${item._id}`, assignParcel)
+        console.log(item.status);
+        const result = await axiosSecure.patch(`/assignParcels/${item._id}`, assignParcel)
+        console.log( result.data);
+        if(isLoading){
+            return <h2>loading.............</h2>
+        }
         if(result.data.modifiedCount > 0){
-            refetch();
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Parcels Assign Complete!",
-                showConfirmButton: false,
-                timer: 1500
-              });
+            toast.success('success')
+            // Swal.fire({
+            //     position: "top-end",
+            //     icon: "success",
+            //     title: "Parcels Assign Complete!",
+            //     showConfirmButton: false,
+            //     timer: 1500
+            //   });
         }
 
     }
+    console.log(approximateDeliveryDate,selectedDeliveryMenId);
+    
     // handle search by date------------
     const handleSearch = async() => {
-        const result = axiosSecure.get(`/allParcels?startDate=${startDate}&endDate=${endDate}`)
+        const result = await axiosSecure.get(`/allParcels?startDate=${startDate}&endDate=${endDate}`)
         console.log(result.data);
     }
 
@@ -126,9 +133,9 @@ const AllParcels = () => {
                                                         onChange={(e) => setApproximateDeliveryDate(e.target.value)}
                                                     />
                                                 </div>
-                                                <div className="mb-4">
-                                                    <input onClick={() => handleAssign(parcel)} type="submit" className="btn login text-white" value="Assign" />
-                                                </div>
+                                                <button onClick={() => handleAssign(parcel)} className="mb-4">
+                                                    <input  className="btn login text-white" value="Assign" />
+                                                </button>
                                             </form>
                                         </div>
                                     </dialog>

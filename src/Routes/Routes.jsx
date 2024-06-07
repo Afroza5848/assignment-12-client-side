@@ -15,6 +15,7 @@ import MyParcels from "@/Pages/Dashboard/Page/User/MyParcels/MyParcels";
 import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooking";
 import AllParcels from "@/Pages/Dashboard/Page/Admin/AllParcels/AllParcels";
 import AllUsers from "@/Pages/Dashboard/Page/Admin/AllUsers/AllUsers";
+import CheckOut from "@/Pages/Dashboard/Page/User/CheckOut/CheckOut";
 
   const router = createBrowserRouter([
     {
@@ -71,6 +72,10 @@ import AllUsers from "@/Pages/Dashboard/Page/Admin/AllUsers/AllUsers";
           path: "updateBooking/:id",
           element: <UpdateBooking></UpdateBooking>,
           loader: ({ params }) => fetch(`http://localhost:5000/parcel/${params.id}`)
+        },
+        {
+          path: "checkOut",
+          element: <CheckOut></CheckOut>
         }
       ]
     }

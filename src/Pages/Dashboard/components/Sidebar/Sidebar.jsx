@@ -11,7 +11,7 @@ import Admin from "./Menu/Admin";
 
 const Sidebar = () => {
    const [role] = useRole();
-    console.log(role);
+
     return (
         <div className="flex flex-col min-h-screen p-3 w-60 bg-base-200 dark:text-gray-800">
             <div className="space-y-3">
