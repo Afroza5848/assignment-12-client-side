@@ -1,7 +1,7 @@
 import useAllDeliverymen from "@/Hooks/useAllDeliverymen";
 import useAllParcels from "@/Hooks/useAllParcels";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 
@@ -9,7 +9,9 @@ import toast from "react-hot-toast";
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure()
-    const [parcels, , refetch] = useAllParcels();
+    const [parcels,isLoading , refetch] = useAllParcels();
+    const [allParcel,setAllParcel] = useState([])
+    
     //console.log(parcels);
     const [deliveryMens] = useAllDeliverymen();
     const [selectedDeliveryMenId, setSelectedDeliveryMenId] = useState('');
@@ -17,7 +19,7 @@ const AllParcels = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [id,setId] = useState('');
-
+    
     // handle assign button
     const handleAssign = (id) => {
         document.getElementById('my_modal_3').showModal();
@@ -37,13 +39,19 @@ const AllParcels = () => {
             toast.success('success')
         }
     }
-
+    console.log(allParcel);
     // handle search by date------------
     const handleSearch = async () => {
         const result = await axiosSecure.get(`/allParcels?startDate=${startDate}&endDate=${endDate}`)
         console.log(result.data);
+        setAllParcel(result.data)
     }
-
+    useEffect(() => {
+        setAllParcel(parcels)
+    },[parcels])
+    if(isLoading){
+        return <p>loading..............</p>
+    }
     return (
         <section className="container mx-auto ">
             <div className="text-center mb-12">
@@ -87,7 +95,7 @@ const AllParcels = () => {
                     <tbody>
 
                         {
-                            parcels.map(parcel => <tr key={parcel._id}>
+                            allParcel.map(parcel => <tr key={parcel._id}>
                                 <td className="border-t text-center capitalize py-4 px-4">{parcel.name}</td>
                                 <td className="border-t text-center py-4 px-4">{parcel.phone}</td>
                                 <td className="border-t text-center py-4 px-4">{parcel.deliveryDate}</td>

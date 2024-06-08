@@ -16,6 +16,7 @@ import UpdateBooking from "@/Pages/Dashboard/Page/User/UpdateBooking/UpdateBooki
 import AllParcels from "@/Pages/Dashboard/Page/Admin/AllParcels/AllParcels";
 import AllUsers from "@/Pages/Dashboard/Page/Admin/AllUsers/AllUsers";
 import CheckOut from "@/Pages/Dashboard/Page/User/CheckOut/CheckOut";
+import MyDeliveryList from "@/Pages/Dashboard/Page/Deliverymen/MyDeliveryList/MyDeliveryList";
 
   const router = createBrowserRouter([
     {
@@ -77,6 +78,11 @@ import CheckOut from "@/Pages/Dashboard/Page/User/CheckOut/CheckOut";
         {
           path: "checkOut",
           element: <CheckOut></CheckOut>
+        },
+        // delivery men related
+        {
+          path: "myDeliveryList",
+          element: <MyDeliveryList></MyDeliveryList>
         }
       ]
     }

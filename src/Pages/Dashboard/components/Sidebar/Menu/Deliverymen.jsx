@@ -4,8 +4,8 @@ import { MdReviews } from "react-icons/md";
 const Deliverymen = () => {
     return (
         <>
-            <MenuItem label="My Delivery List" address="/myDeliveryList" icon={FaThList}></MenuItem>
-            <MenuItem label="My Reviews Menu" address="/myReviews" icon={MdReviews}></MenuItem>
+            <MenuItem label="My Delivery List" address="/dashboard/myDeliveryList" icon={FaThList}></MenuItem>
+            <MenuItem label="My Reviews Menu" address="/dashboard/myReviews" icon={MdReviews}></MenuItem>
         </>
     );
 };

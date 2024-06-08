@@ -15,7 +15,7 @@ const AllUsers = () => {
     const itemPerPage = 5;
     const totalNumberOfPages = Math.ceil(count / itemPerPage)
     const pages = [...Array(totalNumberOfPages).keys()]
-    console.log(count);
+    
     const handlePrevPage = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1)
