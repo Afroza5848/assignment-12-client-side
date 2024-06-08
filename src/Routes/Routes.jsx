@@ -53,7 +53,8 @@ import CheckOut from "@/Pages/Dashboard/Page/User/CheckOut/CheckOut";
         },
         {
           path: "allUsers",
-          element: <AllUsers></AllUsers>
+          element: <AllUsers></AllUsers>,
+          loader: () => fetch('http://localhost:5000/totalCount')
         },
         // user related 
         {
