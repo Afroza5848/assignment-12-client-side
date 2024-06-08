@@ -3,48 +3,43 @@ import useAllParcels from "@/Hooks/useAllParcels";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
+
 
 
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure()
-    const [parcels,isLoading ,refetch] = useAllParcels();
+    const [parcels, , refetch] = useAllParcels();
     //console.log(parcels);
     const [deliveryMens] = useAllDeliverymen();
     const [selectedDeliveryMenId, setSelectedDeliveryMenId] = useState('');
     const [approximateDeliveryDate, setApproximateDeliveryDate] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [id,setId] = useState('');
 
     // handle assign button
-    const handleAssign = async (item) => {
+    const handleAssign = (id) => {
+        document.getElementById('my_modal_3').showModal();
+        setId(id)
+    }
+    const handleSubmit = async() => {
         const assignParcel = {
             deliverymenId: selectedDeliveryMenId,
             approximateDeliveryDate: approximateDeliveryDate,
         }
-        console.log(item.status);
-        const result = await axiosSecure.patch(`/assignParcels/${item._id}`, assignParcel)
-        console.log( result.data);
-        if(isLoading){
-            return <h2>loading.............</h2>
-        }
-        if(result.data.modifiedCount > 0){
-            toast.success('success')
-            // Swal.fire({
-            //     position: "top-end",
-            //     icon: "success",
-            //     title: "Parcels Assign Complete!",
-            //     showConfirmButton: false,
-            //     timer: 1500
-            //   });
-        }
+        console.log(approximateDeliveryDate, selectedDeliveryMenId);
+        const result = await axiosSecure.patch(`/assignParcels/${id}`, assignParcel)
+        console.log(result.data);
 
+        if (result.data.modifiedCount > 0) {
+            refetch();
+            toast.success('success')
+        }
     }
-    console.log(approximateDeliveryDate,selectedDeliveryMenId);
-    
+
     // handle search by date------------
-    const handleSearch = async() => {
+    const handleSearch = async () => {
         const result = await axiosSecure.get(`/allParcels?startDate=${startDate}&endDate=${endDate}`)
         console.log(result.data);
     }
@@ -102,14 +97,14 @@ const AllParcels = () => {
                                 <td className="border-t justify-center flex lg:flex-row flex-col gap-4 items-center py-4  px-4">
                                     <button ></button>
                                     {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                                    <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" onClick={() => document.getElementById('my_modal_3').showModal()}>Manage Parcel</button>
+                                    <button onClick={() => handleAssign(parcel._id)} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" >Manage Parcel</button>
                                     <dialog id="my_modal_3" className="modal py-20">
                                         <div className="modal-box">
                                             <form method="dialog">
                                                 {/* if there is a button in form, it will close the modal */}
                                                 <button className="btn btn-sm btn-circle btn-error absolute right-2 top-2">✕</button>
                                             </form>
-                                            <form >
+                                            <form>
                                                 <div className='mt-4'>
                                                     <label
                                                         className='block mb-2 text-sm font-medium text-gray-600 '
@@ -133,8 +128,8 @@ const AllParcels = () => {
                                                         onChange={(e) => setApproximateDeliveryDate(e.target.value)}
                                                     />
                                                 </div>
-                                                <button onClick={() => handleAssign(parcel)} className="mb-4">
-                                                    <input  className="btn login text-white" value="Assign" />
+                                                <button onClick={handleSubmit} type="submit" className="btn login text-white mb-4">
+                                                    Assign
                                                 </button>
                                             </form>
                                         </div>
