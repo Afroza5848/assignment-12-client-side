@@ -1,7 +1,7 @@
 import useAuth from "@/Hooks/useAuth";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useMyParcels from "@/Hooks/useMyParcels";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -14,6 +14,14 @@ const MyParcels = () => {
     const [parcels, , refetch] = useMyParcels();
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
+    const [MyParcels, setMyParcel] = useState([])
+    const [statusFilter, setStatusFilter] = useState([])
+    const [parcel,setParcel] = useState({});
+
+    const handleReview = item => {
+        document.getElementById('my_modal_3').showModal();
+        setParcel(item)
+    }
 
     console.log(parcels);
     // cancel booking parcel--------------------
@@ -35,24 +43,73 @@ const MyParcels = () => {
         }
     }
     // submit review-------------------------
-    const handleSubmitReview = async (parcel) => {
+    const handleSubmitReview = async () => {
+        const res = await axiosSecure.patch(`/average-review/${parcel?.deliverymenId}`, { rating: rating })
+        console.log('hellowe', res.data);
         const review = {
             name: user?.displayName,
             image: user?.photoURL,
-            rating: rating,
+            rating: parseInt(rating),
             feedback: feedback,
-            deliverymenId: parcel.deliverymenId
+            deliverymenId: parcel.deliverymenId,
+            reviewGivingDate: new Date()
         }
         const result = await axiosSecure.post('/review', review)
-        console.log(result.data);
+       console.log(result);
+           
+        
+
     }
+    // fillter by status------------------
+    const handleFilter = filter => {
+
+        if (filter === 'all') {
+            setStatusFilter(parcels)
+        }
+        if (filter === 'pending') {
+            const pending = MyParcels.filter(parcel => parcel.status === 'pending')
+            setStatusFilter(pending)
+        }
+        if (filter === 'On The Way') {
+            const pending = MyParcels.filter(parcel => parcel.status === 'On The Way')
+            setStatusFilter(pending)
+        }
+        if (filter === 'Delivered') {
+            const pending = MyParcels.filter(parcel => parcel.status === 'Delivered')
+            setStatusFilter(pending)
+        }
+        if (filter === 'Canceled') {
+            const pending = MyParcels.filter(parcel => parcel.status === 'Canceled')
+            setStatusFilter(pending)
+        }
+
+    }
+    console.log(statusFilter);
+    useEffect(() => {
+        setMyParcel(parcels)
+        setStatusFilter(parcels)
+    }, [parcels])
     return (
         <section className="container mx-auto ">
+
             <div className="text-center mb-12">
                 <h2 className="text-5xl eb-serif text-green-500 font-bold">My Parcels</h2>
                 <p className="text-gray-600 mt-4">Here you can view and manage your booked parcels</p>
                 <p className='border-b-2 border-[#4acf3d] w-60 mt-3 mb-8 mx-auto'>----------------</p>
             </div>
+
+
+            <details className="dropdown my-5 w-64 mx-auto">
+                <summary className="m-1 btn login text-white text-xl">Filter By Different Status</summary>
+                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                    <li onClick={() => handleFilter("all")}><a>All</a></li>
+                    <li onClick={() => handleFilter("pending")}><a>Pending</a></li>
+                    <li onClick={() => handleFilter("On The Way")}><a>On The Way</a></li>
+                    <li onClick={() => handleFilter("Delivered")}><a>Delivered</a></li>
+                    <li onClick={() => handleFilter("Canceled")}><a>Canceled</a></li>
+                </ul>
+            </details>
+
             <div className="overflow-x-auto w-full">
                 <table className="lg:w-full bg-white rounded-lg shadow-md">
                     <thead className="login text-white">
@@ -69,7 +126,7 @@ const MyParcels = () => {
                     <tbody>
 
                         {
-                            parcels.map(parcel => <tr key={parcel._id}>
+                            statusFilter.map(parcel => <tr key={parcel._id}>
                                 <td className="border-t text-center py-4 px-4">{parcel.parcelType}</td>
                                 <td className="border-t text-center py-4 px-4">{parcel.deliveryDate}</td>
                                 <td className="border-t text-center py-4 px-4">{parcel.approximateDeliveryDate}</td>
@@ -78,11 +135,11 @@ const MyParcels = () => {
                                 <td className="border-t text-center py-4 px-4">{parcel.status}</td>
                                 <td className="border-t text-center flex lg:flex-row flex-col gap-4 items-center py-4  px-4">
 
-                                    <Link to={`/dashboard/updateBooking/${parcel._id}`}><button disabled={parcel.status !== 'pending'} className="bg-blue-500 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-1 px-2 rounded" >Update</button></Link>
+                                    <Link to={`/dashboard/updateBooking/${parcel._id}`}><button disabled={parcel.status !== 'pending'} className={`bg-blue-500 ${parcel.status !== 'pending' && 'cursor-not-allowed'} hover:bg-blue-700 disabled:opacity-10 text-white font-bold py-1 px-2 rounded`} >Update</button></Link>
                                     <button onClick={() => handleUpdateStatus(parcel)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" >Cancel</button>
 
                                     {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" onClick={() => document.getElementById('my_modal_3').showModal()}>Review</button>
+                                    <button onClick={() => handleReview(parcel)} className={`${parcel.status === 'Delivered' ? 'block' : 'hidden'} bg-green-500 hover:bg-green-700  text-white font-bold py-1 px-2 rounded`} >Review</button>
                                     <dialog id="my_modal_3" className="modal">
                                         <div className="modal-box">
                                             <form method="dialog">
@@ -112,13 +169,14 @@ const MyParcels = () => {
                                                 <div className="mb-4">
                                                     <label className=" mb-2">Rating (out of 5)</label>
                                                     <input
+                                                        id="rating"
                                                         type="number"
-
-                                                        min="1"
-                                                        max="5"
-                                                        onChange={(e) => setRating(e.target.value)}
-                                                        className="w-full p-2 border border-gray-300 rounded"
+                                                        value={rating}
+                                                        onChange={(e) => setRating(Math.max(1, Math.min(5, parseInt(e.target.value))))}
+                                                        min={1}
+                                                        max={5}
                                                         required
+                                                        className="mt-1 border v p-2 block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                                                     />
                                                 </div>
                                                 <div className="mb-4">
@@ -133,7 +191,7 @@ const MyParcels = () => {
                                                 </div>
                                                 {/* <input type="hidden" value='' /> */}
                                                 <button
-                                                    onClick={() => handleSubmitReview(parcel)}
+                                                    onClick={handleSubmitReview}
                                                     type="submit"
                                                     className="login text-white px-4 py-2 rounded"
                                                 >
