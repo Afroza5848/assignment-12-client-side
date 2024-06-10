@@ -45,7 +45,7 @@ const Login = () => {
       console.log(result);
       if (result.data.insertedId) {
        
-        navigate('/')
+        navigate('/dashboard')
       }
       toast.success('SignIn Successful')
       navigate('/dashboard')
@@ -56,7 +56,7 @@ const Login = () => {
     }
   }
   return (
-    <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
+    <div className='flex justify-center items-center mt-20 min-h-[calc(100vh-306px)]'>
       <div className='flex w-full lg:flex-row flex-col max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
         <div
           className='bg-cover bg-center  lg:w-1/2'

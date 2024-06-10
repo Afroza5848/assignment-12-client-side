@@ -30,20 +30,34 @@ const MyParcels = () => {
             return toast.error(`Your Parcels already ${parcel.status}.`)
         }
         const status = parcel.status
-        const result = await axiosSecure.patch(`/parcels/${parcel._id}`, { status })
-        if (result.data.modifiedCount > 0) {
-            refetch();
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: `${parcel.name}, Your parcel Canceled.`,
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                const result = await axiosSecure.patch(`/parcels/${parcel._id}`, { status })
+                if (result.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${parcel.name}, Your parcel Canceled.`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            }
+        });
+
     }
     // submit review-------------------------
-    
+
     const handleSubmitReview = async () => {
         const review = {
             name: user?.displayName,

@@ -82,7 +82,7 @@ const Registration = () => {
 
 
     return (
-        <div className='flex justify-center w-full items-center min-h-[calc(100vh-306px)]'>
+        <div className='flex justify-center w-full items-center mt-20 min-h-[calc(100vh-306px)]'>
             <div className='flex lg:w-[55%] lg:flex-row flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg  '>
                 <div className='w-full px-6 py-8 md:px-8 lg:w-1/2'>
                     <div className='flex justify-center mx-auto'>

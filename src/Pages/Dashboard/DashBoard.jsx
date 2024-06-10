@@ -6,15 +6,16 @@ import Sidebar from "./components/Sidebar/Sidebar";
 
 
 const DashBoard = () => {
-    
+
     return (
         <div>
-            <Drawer></Drawer>
+
             <div className="flex gap-8">
                 <Sidebar></Sidebar>
 
                 <div className=" w-full">
-                   <Outlet></Outlet>
+                    <Drawer></Drawer>
+                    <Outlet></Outlet>
                 </div>
             </div>
         </div>

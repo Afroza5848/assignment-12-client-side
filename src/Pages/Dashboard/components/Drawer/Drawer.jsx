@@ -4,7 +4,7 @@ import DrawerSide from "./DrawerSide";
 
 const Drawer = () => {
     return (
-        <div className="navbar bg-base-200 drawer">
+        <div className="navbar z-10 bg-base-200 drawer">
             <div className="flex-1">
             <div className='flex items-center gap-3'>
                         <img className='w-14' src={logo} alt="" />
@@ -22,7 +22,6 @@ const Drawer = () => {
                         <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                             <DrawerSide></DrawerSide>
-
                         </ul>
                     </div>
                 </div>
