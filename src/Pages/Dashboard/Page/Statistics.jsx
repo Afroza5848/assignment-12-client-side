@@ -1,7 +1,18 @@
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
 const Statistics = () => {
+    const axiosSecure = useAxiosSecure()
+    const {data: date = []} = useQuery({
+        queryKey: ['data'],
+        queryFn: async() => {
+            const res = await axiosSecure.get('/date')
+            return res.data
+        }
+    })
+    console.log(date);
     const [state, setState] = useState({
         
         options: {
@@ -25,8 +36,8 @@ const Statistics = () => {
     })
 
     return (
-        <div>
-            <section className="dark:bg-gray-100 dark:text-gray-800">
+        <div className="z-[-1]">
+            <section className="dark:bg-gray-100 z-[-1] dark:text-gray-800">
                 <div className="container flex flex-col items-center justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
                     <div className="app">
                         <div className="row">

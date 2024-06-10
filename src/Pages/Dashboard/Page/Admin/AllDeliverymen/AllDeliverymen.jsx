@@ -1,20 +1,12 @@
 import useAllDeliverymen from "@/Hooks/useAllDeliverymen";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+
 
 
 const AllDeliverymen = () => {
     const [deliveryMens] = useAllDeliverymen()
-    const axiosSecure = useAxiosSecure();
     
-    const {data: averageReview =[] } = useQuery({
-        queryKey: ['averageReview'],
-        queryFn: async() => {
-            const res = await axiosSecure.get('/average-review')
-            return res.data.averageReview;
-        }
-    })
-    console.log('average',averageReview);
+
+   console.log(deliveryMens);
 
     return (
         <div className="container mx-auto py-16">
@@ -36,7 +28,7 @@ const AllDeliverymen = () => {
                                 <td className="px-4 py-2 text-center">{man.name}</td>
                                 <td className="px-4 py-2 text-center">{man.phone}</td>
                                 <td className="px-4 py-2 text-center">{man.parcelDelivered}</td>
-                                <td className="px-4 py-2 text-center">{averageReview}</td>
+                                <td className="px-4 py-2 text-center">{(man.totalRating / man.ratingNumber) ? (man?.totalRating / man?.ratingNumber).toFixed() : 'no review' }</td>
                             </tr>
                         ))}
                     </tbody>

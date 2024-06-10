@@ -16,7 +16,7 @@ const MyParcels = () => {
     const { user } = useAuth();
     const [MyParcels, setMyParcel] = useState([])
     const [statusFilter, setStatusFilter] = useState([])
-    const [parcel,setParcel] = useState({});
+    const [parcel, setParcel] = useState({});
 
     const handleReview = item => {
         document.getElementById('my_modal_3').showModal();
@@ -43,9 +43,8 @@ const MyParcels = () => {
         }
     }
     // submit review-------------------------
+    
     const handleSubmitReview = async () => {
-        const res = await axiosSecure.patch(`/average-review/${parcel?.deliverymenId}`, { rating: rating })
-        console.log('hellowe', res.data);
         const review = {
             name: user?.displayName,
             image: user?.photoURL,
@@ -55,11 +54,15 @@ const MyParcels = () => {
             reviewGivingDate: new Date()
         }
         const result = await axiosSecure.post('/review', review)
-       console.log(result);
-           
-        
+        console.log(result);
+        if (result.data.insertedId) {
+            const res = await axiosSecure.put(`/average-review/${parcel?.deliverymenId}`, { rating: parseInt(rating) })
+            console.log('hellowe', res.data);
+            toast.success('Review submit successfully')
+        }
 
     }
+    console.log(parcel);
     // fillter by status------------------
     const handleFilter = filter => {
 
@@ -149,7 +152,7 @@ const MyParcels = () => {
 
                                             <h2 className="text-3xl text-green-500 eb-serif font-bold mb-2">Give Review</h2>
                                             <p className='border-b-2 border-[#4acf3d] w-60 mt-3 mb-8 mx-auto'>----------------</p>
-                                            <form >
+                                            <div >
                                                 <div className="mb-4">
                                                     <label className="block mb-2">Users Name</label>
                                                     <input
@@ -197,7 +200,7 @@ const MyParcels = () => {
                                                 >
                                                     Submit Review
                                                 </button>
-                                            </form>
+                                            </div>
                                         </div>
                                     </dialog>
 

@@ -32,7 +32,7 @@ const Banner = () => {
 
         <>
 
-            <section className="lg:mb-[200px] md:mb-[100px] mb-[50px] relative">
+            <section className="lg:mb-[80px] md:mb-[60px] mb-[40px] relative">
                 <div className="">
                     <div className="relative ">
                         <Swiper
@@ -77,7 +77,7 @@ const Banner = () => {
                     </div>
 
                     <div className="container flex flex-col absolute inset-y-8 -inset-x-1/2 z-50 items-center px-4 py-16 pb-24 mx-auto text-center lg:pb-56 md:py-32 md:px-10 lg:px-32 dark:text-gray-50">
-                        <h1 className="text-5xl font-bold leading-none sm:text-6xl xl:max-w-3xl text-[#4acf3d] monts">Congratulations
+                        <h1 className=" font-bold leading-none lg:text-6xl text-4xl xl:max-w-3xl text-[#4acf3d] monts">Congratulations
                             <span className="ml-2 text-gray-100">
                                 {typeEffect}
                             </span>

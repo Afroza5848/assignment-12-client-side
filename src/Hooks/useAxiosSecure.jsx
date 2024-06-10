@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://parcel-pro-server-ten.vercel.app',
+    // baseURL: 'http://localhost:5000',
 })
 const useAxiosSecure = () => {
     const navigate = useNavigate();

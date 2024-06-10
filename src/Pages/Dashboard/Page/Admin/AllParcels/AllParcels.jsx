@@ -25,6 +25,7 @@ const AllParcels = () => {
         document.getElementById('my_modal_3').showModal();
         setId(id)
     }
+    console.log(selectedDeliveryMenId);
     const handleSubmit = async() => {
         const assignParcel = {
             deliverymenId: selectedDeliveryMenId,
@@ -112,7 +113,7 @@ const AllParcels = () => {
                                                 {/* if there is a button in form, it will close the modal */}
                                                 <button className="btn btn-sm btn-circle btn-error absolute right-2 top-2">✕</button>
                                             </form>
-                                            <form>
+                                            <div>
                                                 <div className='mt-4'>
                                                     <label
                                                         className='block mb-2 text-sm font-medium text-gray-600 '
@@ -139,7 +140,7 @@ const AllParcels = () => {
                                                 <button onClick={handleSubmit} type="submit" className="btn login text-white mb-4">
                                                     Assign
                                                 </button>
-                                            </form>
+                                            </div>
                                         </div>
                                     </dialog>
                                 </td>

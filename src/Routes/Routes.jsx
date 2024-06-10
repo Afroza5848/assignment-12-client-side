@@ -19,6 +19,10 @@ import CheckOut from "@/Pages/Dashboard/Page/User/CheckOut/CheckOut";
 import MyDeliveryList from "@/Pages/Dashboard/Page/Deliverymen/MyDeliveryList/MyDeliveryList";
 import MyReview from "@/Pages/Dashboard/Page/Deliverymen/MyReview/MyReview";
 import AllDeliverymen from "@/Pages/Dashboard/Page/Admin/AllDeliverymen/AllDeliverymen";
+import AdminRoute from "./AdminRoute";
+import DeliverymenRoute from "./DeliverymenRoute";
+import ConfettiRoute from "@/Pages/Dashboard/components/Confetti/ConfettiRoute";
+
 
   const router = createBrowserRouter([
     {
@@ -48,16 +52,20 @@ import AllDeliverymen from "@/Pages/Dashboard/Page/Admin/AllDeliverymen/AllDeliv
         // admin related
         {
            index: true,
-          element: <Statistics></Statistics>
+          element: <AdminRoute><Statistics></Statistics></AdminRoute>
         },
         {
           path: "allParcels",
-          element: <AllParcels></AllParcels>
+          element: <AdminRoute><AllParcels></AllParcels></AdminRoute>
         },
         {
           path: "allUsers",
-          element: <AllUsers></AllUsers>,
-          loader: () => fetch('http://localhost:5000/totalCount')
+          element: <AdminRoute><AllUsers></AllUsers></AdminRoute>,
+          loader: () => fetch('https://parcel-pro-server-ten.vercel.app/totalCount')
+        },
+        {
+          path: 'allDeliverymen',
+          element: <AdminRoute><AllDeliverymen></AllDeliverymen></AdminRoute>
         },
         // user related 
         {
@@ -75,24 +83,25 @@ import AllDeliverymen from "@/Pages/Dashboard/Page/Admin/AllDeliverymen/AllDeliv
         {
           path: "updateBooking/:id",
           element: <UpdateBooking></UpdateBooking>,
-          loader: ({ params }) => fetch(`http://localhost:5000/parcel/${params.id}`)
+          loader: ({ params }) => fetch(`https://parcel-pro-server-ten.vercel.app/parcel/${params.id}`)
         },
         {
           path: "checkOut",
           element: <CheckOut></CheckOut>
         },
         {
-          path: 'allDeliverymen',
-          element: <AllDeliverymen></AllDeliverymen>
+          path: 'confettiRoute',
+          element: <ConfettiRoute></ConfettiRoute>
         },
+        
         // delivery men related
         {
           path: "myDeliveryList",
-          element: <MyDeliveryList></MyDeliveryList>
+          element: <DeliverymenRoute><MyDeliveryList></MyDeliveryList></DeliverymenRoute>
         },
         {
           path: "myReviews",
-          element: <MyReview></MyReview>
+          element: <DeliverymenRoute><MyReview></MyReview></DeliverymenRoute>
         }
       ]
     }

@@ -19,9 +19,16 @@
   background-color: rgb(8, 230, 8) !important;
 }
 
-
-@media (min-width: 1024px) {
+.bar{
+  display: block !important;
+}
+@media (max-width: 1024px) {
   .bar{
+    display: none !important;
+  }
+}
+@media (min-width: 1024px) {
+  .drawer{
     display: none !important;
   }
 }

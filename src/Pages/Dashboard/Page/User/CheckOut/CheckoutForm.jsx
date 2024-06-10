@@ -1,10 +1,26 @@
+import useAuth from "@/Hooks/useAuth";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useMyParcels from "@/Hooks/useMyParcels";
+import Confetti from 'react-confetti';
+import { useWindowSize } from "@react-hook/window-size";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+
 const CheckoutForm = () => {
+    const [showConfetti, setShowConfetti] = useState(false);
+    const [width, height] = useWindowSize();
+
+
+    const triggerConfetti = () => {
+        setShowConfetti(true);
+        
+    };
+
+
+
+    const { user } = useAuth();
     const [clientSecret, setClientSecret] = useState('');
     const stripe = useStripe();
     const elements = useElements();
@@ -14,6 +30,7 @@ const CheckoutForm = () => {
     // Calculate total parcel price
     const totalParcelPrice = parcels.reduce((total, item) => total + item.parcelPrice, 0);
     console.log(totalParcelPrice);
+
 
     useEffect(() => {
         // Create PaymentIntent as soon as the component loads
@@ -50,6 +67,27 @@ const CheckoutForm = () => {
             console.log('Payment method', paymentMethod);
             toast.success("Payment method created successfully");
         }
+
+        // confirm payment
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    email: user?.email || 'anonymous',
+                    name: user?.displayName || 'anonymous'
+                }
+            }
+        })
+        if (confirmError) {
+            console.log('confirm error');
+        }
+        else {
+            console.log('pay...', paymentIntent);
+            if (paymentIntent.status === 'succeeded') {
+                
+               console.log('success');
+            }
+        }
     };
 
     return (
@@ -70,13 +108,24 @@ const CheckoutForm = () => {
                     },
                 }}
             />
-            <button
+            <button onClick={triggerConfetti}
                 type="submit"
                 className="login disabled:opacity-20 px-10 py-2 text-xl text-white eb-serif font-bold rounded mt-8"
                 disabled={!stripe || !clientSecret}
             >
                 Pay
             </button>
+            {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          numberOfPieces={500}
+          gravity={0.3}
+          wind={0.1}
+          colors={['#ff0', '#0f0', '#00f']}
+          recycle={false}
+        />
+      )}
         </form>
     );
 };

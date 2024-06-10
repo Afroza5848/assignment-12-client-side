@@ -1,19 +1,17 @@
-
-import { MdDashboard } from "react-icons/md";
-import { IoHome } from "react-icons/io5";
-import { MdLogout } from "react-icons/md";
-import MenuItem from "./Menu/MenuItem";
 import useRole from "@/Hooks/useRole";
-import NormalUserMenu from "./Menu/NormalUserMenu";
-import Deliverymen from "./Menu/Deliverymen";
-import Admin from "./Menu/Admin";
+import NormalUserMenu from "../Sidebar/Menu/NormalUserMenu";
+import Deliverymen from "../Sidebar/Menu/Deliverymen";
+import Admin from "../Sidebar/Menu/Admin";
+import MenuItem from "../Sidebar/Menu/MenuItem";
+import { IoHome } from "react-icons/io5";
+import { MdDashboard, MdLogout } from "react-icons/md";
 
 
-const Sidebar = () => {
-   const [role] = useRole();
+const DrawerSide = () => {
 
+    const [role] = useRole();
     return (
-        <div className="flex flex-col min-h-screen bar p-3 w-60 bg-base-200 dark:text-gray-800">
+        <div className="flex flex-col min-h-screen z-[200] p-3 w-60 bg-base-200 dark:text-gray-800">
             <div className="space-y-3">
                 <div className="flex items-center justify-between">
                     <h2 className="flex items-center gap-2 text-2xl bg-green-300 px-8 py-1 rounded"><MdDashboard />Dashboard</h2>
@@ -50,4 +48,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default DrawerSide;

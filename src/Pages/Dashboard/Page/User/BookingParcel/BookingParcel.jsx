@@ -1,5 +1,5 @@
 import useAuth from "@/Hooks/useAuth";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ const BookingParcel = () => {
     const { user } = useAuth();
     const [price, setPrice] = useState(Number)
     const [weight, setWeight] = useState(Number)
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     // calculate price by parcel weight
     const handlePrice = (e) => {
         e.preventDefault();
@@ -53,19 +53,19 @@ const BookingParcel = () => {
             receiverPhone: receiverPhone,
             deliveryAddress: deliveryAddress,
             deliveryDate: deliveryDate,
-            deliveryLatitude: deliveryLatitude,
-            deliveryLongitude: deliveryLongitude,
+            deliveryLatitude: parseFloat(deliveryLatitude),
+            deliveryLongitude: parseFloat(deliveryLongitude),
             parcelPrice: price,
             bookingDate: new Date().toLocaleDateString(),
             status: 'pending'
         }
 
         try {
-            const result = await axiosPublic.post('/parcels', bookingParcel)
+            const result = await axiosSecure.post('/parcels', bookingParcel)
             console.log(result.data);
             if (result.data.insertedId) {
                 // update number of book parcel and update total spent
-                const res = await axiosPublic.patch('/updateUser', bookingParcel)
+                const res = await axiosSecure.patch('/updateUser', bookingParcel)
                 console.log('update book',res.data);
 
                 Swal.fire({

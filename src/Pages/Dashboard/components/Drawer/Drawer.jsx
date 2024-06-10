@@ -1,10 +1,10 @@
 import { FaBars } from "react-icons/fa6";
-import Sidebar from "../Sidebar/Sidebar";
 import logo from '../../../../assets/image/logo.png'
+import DrawerSide from "./DrawerSide";
 
 const Drawer = () => {
     return (
-        <div className="navbar bg-base-200 bar">
+        <div className="navbar bg-base-200 drawer">
             <div className="flex-1">
             <div className='flex items-center gap-3'>
                         <img className='w-14' src={logo} alt="" />
@@ -21,7 +21,7 @@ const Drawer = () => {
                     <div className="drawer-side">
                         <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-                            <Sidebar></Sidebar>
+                            <DrawerSide></DrawerSide>
 
                         </ul>
                     </div>
