@@ -5,9 +5,11 @@ import Admin from "../Sidebar/Menu/Admin";
 import MenuItem from "../Sidebar/Menu/MenuItem";
 import { IoHome } from "react-icons/io5";
 import { MdDashboard, MdLogout } from "react-icons/md";
+import useAuth from "@/Hooks/useAuth";
 
 
 const DrawerSide = () => {
+    const {logOut} = useAuth()
 
     const [role] = useRole();
     return (
@@ -38,7 +40,7 @@ const DrawerSide = () => {
                     <li className="rounded-sm">
                         <a rel="noopener noreferrer" href="#" className="flex text-xl items-center p-2 space-x-3 rounded-md">
                             <MdLogout className="text-green-500" />
-                            <span>Logout</span>
+                            <button onAuxClick={() => logOut()}>Logout</button>
                         </a>
                     </li>
 

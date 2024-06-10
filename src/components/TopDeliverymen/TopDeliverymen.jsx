@@ -18,7 +18,7 @@ const TopDeliverymen = () => {
                     <img src={man?.image} alt="" className="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500" />
                     <div className="flex flex-col justify-between p-6 space-y-8">
                         <div className="space-y-2">
-                            <h2 className="text-3xl text-green-500 eb-serif font-semibold tracking-wide">{man?.name}</h2>
+                            <h2 className="text-3xl text-green-500 eb-serif capitalize font-semibold tracking-wide">{man?.name}</h2>
                             <p className="dark:text-gray-800">Parcel Deliverd: {man?.parcelDelivered}</p>
                             <p className="dark:text-gray-800">Average Rating: {man?.averageRating}</p>
                         </div>

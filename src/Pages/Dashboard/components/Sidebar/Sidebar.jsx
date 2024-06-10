@@ -7,10 +7,12 @@ import useRole from "@/Hooks/useRole";
 import NormalUserMenu from "./Menu/NormalUserMenu";
 import Deliverymen from "./Menu/Deliverymen";
 import Admin from "./Menu/Admin";
+import useAuth from "@/Hooks/useAuth";
 
 
 const Sidebar = () => {
    const [role] = useRole();
+   const {logOut} = useAuth();
 
     return (
         <div className="flex flex-col min-h-screen bar p-3 w-60 bg-base-200 dark:text-gray-800">
@@ -40,7 +42,7 @@ const Sidebar = () => {
                     <li className="rounded-sm">
                         <a rel="noopener noreferrer" href="#" className="flex text-xl items-center p-2 space-x-3 rounded-md">
                             <MdLogout className="text-green-500" />
-                            <span>Logout</span>
+                            <button onClick={() => logOut()}>Logout</button>
                         </a>
                     </li>
 
