@@ -2,10 +2,6 @@
 
 # Visit the live site: [parcelPro](https://parcel-pro-e2dbb.web.app)
 
-# Selected Category:  assignment12_category_0016
-## Admin Credentials
-- **Username**: Suriya 
-- **Password**: ABCdef
 
 1.  Users can create an account and log in to access the platform.
 2.  Users can register and log in using social media accounts.
